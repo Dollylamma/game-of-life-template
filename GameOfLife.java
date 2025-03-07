@@ -32,11 +32,31 @@ public class GameOfLife implements Board {
     public void step()
     {
         print();
+        int newBoard[][] = new int[board.length][board[0].length];
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[0].length; j++){
+                newBoard[i][j]=board[i][j];
+            }
+        }
         // Update the game board, store a 1 if the cell is alive and a 0 otherwise.
         for(int i=0; i<board.length; i++){
             for(int j=0; j<board[0].length; j++){
                 int neighbor=countNeighbors(i, j);
-                if()
+                // System.out.println(i + " + " + j + " + " + neighbor);
+                if(get(i, j)==0){
+                    if(neighbor==3){
+                        newBoard[i][j]=1;
+                    }
+                } else{
+                    if(neighbor<2 || neighbor>3){
+                        newBoard[i][j]=0;
+                    }
+                }
+            }
+        }
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[0].length; j++){
+                board[i][j]=newBoard[i][j];
             }
         }
     }
@@ -46,6 +66,13 @@ public class GameOfLife implements Board {
         int count = 0;
         // count the number of neighbors the cell has
         // use the get(x,y) method to read any board state you need.
+        int xarr[] = {1,  1,  0, -1, -1, -1, 0, 1};
+        int yarr[] = {0, -1, -1, -1,  0,  1, 1, 1};
+        for(int i=0; i<8; i++){
+            if(get(x+xarr[i], y+yarr[i]) == 1){
+                count++;
+            }
+        }
         return count;
     }
 
